@@ -1,12 +1,18 @@
 import Fastify from "fastify"
 import fastifyBasicAuth from "@fastify/basic-auth"
-
+import fs from 'node:fs'
 
 const port = 3000;
 const authenticate = {realm: 'Westeros'}
 
 const fastify = Fastify({
-    logger: true
+    logger: true,
+    http2: true,
+    https: {
+        allowHTTP1: true,
+        key: fs.readFileSync('./src/server.key'),
+        cert: fs.readFileSync('./src/server.crt')
+    }
 })
 
 fastify.register(fastifyBasicAuth, {
@@ -63,3 +69,4 @@ fastify.listen({port}, function (err, address) {
 
     fastify.log.info(`Fastify is listening on port: ${address}`);
 });
+
