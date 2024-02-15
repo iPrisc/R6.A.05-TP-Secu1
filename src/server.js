@@ -35,6 +35,15 @@ fastify.after(() => {
             }
         }
     })
+    fastify.route({
+        method: 'GET',
+        url: '/autre',
+        handler: async (req, reply) => {
+            return {
+                replique: 'Un Lannister paye toujours ses dettes !'
+            }
+        }
+    })
 })
 
 fastify.setErrorHandler(function (err, req, reply) {
